@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:your_barber/data/dummy_users.dart';
+import 'package:your_barber/models/user.dart';
+import 'package:your_barber/provider/users.dart';
+
 
 void main(){
   runApp(const MyApp());
@@ -133,20 +138,87 @@ class CriarConta extends StatefulWidget {
   const CriarConta({super.key});
 
   @override
-  State<CriarConta> createState() => _NestedDialogState();
+  State<CriarConta> createState() => DialogoCriar();
 }
 
-class _NestedDialogState extends State<CriarConta> {
+class DialogoCriar extends State<CriarConta> {
+  
+  
+  
   @override
   Widget build(BuildContext context) {
-    return const AlertDialog(
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: [
-            Text("Você clicou em criar sua conta!")
-          ],
-        ),
-      ),
+    final Users usuario = Provider.of(context);
+    final _form = GlobalKey<FormState>();
+    // ignore: unused_local_variable
+    return Scaffold(
+      body: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(27),
+                child: Form(
+                  key: _form,
+                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 30,),
+                    const Text("Digite seus dados para cadastro"),
+                    const SizedBox(height: 10,),
+                    TextFormField(
+                      cursorColor: Colors.black,
+                      //padding: EdgeInsets.all(15),
+                      //placeholder: "Digite seu nome",
+                      validator:(value){
+                        return 'Erro';
+                      },
+                      //decoration: BoxDecoration(
+                        //borderRadius: BorderRadius.all(Radius.circular(7))
+                      //),
+                    ),
+
+                       const SizedBox(height: 10,),
+                    const CupertinoTextField(
+                      cursorColor: Colors.black,
+                      padding: EdgeInsets.all(15),
+                      placeholder: "Digite seu email",
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(7))
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 15),
+                    const CupertinoTextField(
+                      cursorColor: Colors.black,
+                      padding: EdgeInsets.all(15),
+                      placeholder: "Digite sua senha",
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(7))
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: double.infinity,
+                      child: CupertinoButton(
+                        padding: const EdgeInsets.all(17), 
+                        color: Colors.greenAccent,
+                        child: const Text(
+                          "Cadastrar",
+                          style: TextStyle(
+                            color: Colors.black45,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        onPressed: () {
+                          _form.currentState?.validate();
+                          _form.currentState?.save();
+                        },
+                      ),
+                      ),
+                    ],
+                ),
+                ),
+                ),
+      
+
     );
   }
 }
