@@ -40,7 +40,7 @@ class Users with ChangeNotifier {
       _items.putIfAbsent(
           id,
           () => CadastroUser(
-            id: id = id,
+            id: id,
             name: users.name,
             email: users.email,
             password: users.password));
