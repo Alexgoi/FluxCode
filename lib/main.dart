@@ -42,6 +42,7 @@ class FirstPage extends StatelessWidget {
               icon: const Icon(Icons.account_circle_rounded))
         ],
       ),
+      backgroundColor: const Color.fromARGB(179, 159, 155, 155),
       body: Center(
         //padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -126,6 +127,7 @@ class LoginPage extends StatelessWidget {
         title: const Text("You care"),
         backgroundColor: Colors.cyan,
       ),
+      backgroundColor: const Color.fromARGB(179, 159, 155, 155),
       body: Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(27),
@@ -136,23 +138,20 @@ class LoginPage extends StatelessWidget {
               height: 30,
             ),
             const Text("Digite seus dados aqui"),
+            const TextField(
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                  labelText: 'Digite seu e-mail', prefixIcon: Icon(Icons.mail)),
+            ),
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
-            const CupertinoTextField(
-              cursorColor: Colors.black,
-              padding: EdgeInsets.all(15),
-              placeholder: "Digite seu email",
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(7))),
-            ),
-            const SizedBox(height: 15),
-            const CupertinoTextField(
-              cursorColor: Colors.black,
-              padding: EdgeInsets.all(15),
-              placeholder: "Digite sua senha",
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(7))),
+            const TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Digite sua senha',
+                prefixIcon: Icon(Icons.password),
+              ),
             ),
             const SizedBox(height: 30),
             SizedBox(
@@ -168,7 +167,9 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
             const SizedBox(height: 7),
@@ -215,14 +216,13 @@ class CriarConta extends StatefulWidget {
 class DialogoCriar extends State<CriarConta> {
   @override
   Widget build(BuildContext context) {
-    final Users user = Provider.of(context);
-    final _form = GlobalKey<FormState>();
+    //final Users user = Provider.of(context);
+    //final form = GlobalKey<FormState>();
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(27),
-        child: Form(
-          key: _form,
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -233,16 +233,12 @@ class DialogoCriar extends State<CriarConta> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
+              const CupertinoTextField(
                 cursorColor: Colors.black,
-                //padding: EdgeInsets.all(15),
-                //placeholder: "Digite seu nome",
-                validator: (value) {
-                  return 'Erro';
-                },
-                //decoration: BoxDecoration(
-                //borderRadius: BorderRadius.all(Radius.circular(7))
-                //),
+                padding: EdgeInsets.all(15),
+                placeholder: "Digite seu nome",
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(7))),
               ),
               const SizedBox(
                 height: 10,
@@ -277,8 +273,10 @@ class DialogoCriar extends State<CriarConta> {
                     ),
                   ),
                   onPressed: () {
-                    _form.currentState?.validate();
-                    _form.currentState?.save();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const FirstPage()));
                   },
                 ),
               ),
